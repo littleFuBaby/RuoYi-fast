@@ -144,7 +144,7 @@ public class DeptServiceImpl implements IDeptService
     }
 
     /**
-     * 查询部门人数
+     * 根据父部门ID查询下级部门数量
      * 
      * @param parentId 部门ID
      * @return 结果
@@ -316,15 +316,15 @@ public class DeptServiceImpl implements IDeptService
      * @return 结果
      */
     @Override
-    public String checkDeptNameUnique(Dept dept)
+    public boolean checkDeptNameUnique(Dept dept)
     {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
         Dept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
         if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue())
         {
-            return UserConstants.DEPT_NAME_NOT_UNIQUE;
+            return UserConstants.NOT_UNIQUE;
         }
-        return UserConstants.DEPT_NAME_UNIQUE;
+        return UserConstants.UNIQUE;
     }
 
     /**

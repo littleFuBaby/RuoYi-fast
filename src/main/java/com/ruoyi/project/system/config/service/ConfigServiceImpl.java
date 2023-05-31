@@ -113,6 +113,12 @@ public class ConfigServiceImpl implements IConfigService
     public int updateConfig(Config config)
     {
         config.setUpdateBy(ShiroUtils.getLoginName());
+        Config temp = configMapper.selectConfigById(config.getConfigId());
+        if (!StringUtils.equals(temp.getConfigKey(), config.getConfigKey()))
+        {
+            CacheUtils.remove(getCacheName(), getCacheKey(temp.getConfigKey()));
+        }
+        
         int row = configMapper.updateConfig(config);
         if (row > 0)
         {
@@ -181,15 +187,15 @@ public class ConfigServiceImpl implements IConfigService
      * @return 结果
      */
     @Override
-    public String checkConfigKeyUnique(Config config)
+    public boolean checkConfigKeyUnique(Config config)
     {
         Long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
         Config info = configMapper.checkConfigKeyUnique(config.getConfigKey());
         if (StringUtils.isNotNull(info) && info.getConfigId().longValue() != configId.longValue())
         {
-            return UserConstants.CONFIG_KEY_NOT_UNIQUE;
+            return UserConstants.NOT_UNIQUE;
         }
-        return UserConstants.CONFIG_KEY_UNIQUE;
+        return UserConstants.UNIQUE;
     }
 
     /**

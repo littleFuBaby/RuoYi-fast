@@ -5,7 +5,7 @@
 
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi</artifactId>
-    <version>4.7.5</version>
+    <version>4.7.7</version>
     <packaging>jar</packaging>
 
     <name>ruoyi</name>
@@ -24,20 +24,18 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-        <shiro.version>1.9.1</shiro.version>
+        <shiro.version>1.10.1</shiro.version>
         <thymeleaf.extras.shiro.version>2.1.0</thymeleaf.extras.shiro.version>
-        <mybatis.spring.boot.starter.version>2.2.2</mybatis.spring.boot.starter.version>
-        <pagehelper.spring.boot.starter.version>1.4.3</pagehelper.spring.boot.starter.version>
+        <pagehelper.spring.boot.starter.version>1.4.6</pagehelper.spring.boot.starter.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <druid.version>1.2.11</druid.version>
+        <druid.version>1.2.16</druid.version>
         <commons.io.version>2.11.0</commons.io.version>
-        <commons.fileupload.version>1.4</commons.fileupload.version>
         <bitwalker.version>1.21</bitwalker.version>
         <velocity.version>2.3</velocity.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
+        <kaptcha.version>2.3.3</kaptcha.version>
         <swagger.version>3.0.0</swagger.version>
         <poi.version>4.1.2</poi.version>
-        <oshi.version>6.2.2</oshi.version>
+        <oshi.version>6.4.1</oshi.version>
     </properties>
 
     <dependencies>
@@ -86,13 +84,6 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!-- SpringBoot集成mybatis框架 -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis.spring.boot.starter.version}</version>
-        </dependency>
-
         <!-- pagehelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -124,13 +115,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
-        </dependency>
-
-        <!-- 文件上传工具类 -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>${commons.fileupload.version}</version>
         </dependency>
 
         <!-- Shiro核心框架 -->
@@ -202,7 +186,7 @@
 
         <!-- 验证码 -->
         <dependency>
-            <groupId>com.github.penggle</groupId>
+            <groupId>pro.fessional</groupId>
             <artifactId>kaptcha</artifactId>
             <version>${kaptcha.version}</version>
             <exclusions>

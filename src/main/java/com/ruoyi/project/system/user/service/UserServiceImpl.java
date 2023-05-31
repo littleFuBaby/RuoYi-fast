@@ -364,15 +364,15 @@ public class UserServiceImpl implements IUserService
      * @return 结果
      */
     @Override
-    public String checkLoginNameUnique(User user)
+    public boolean checkLoginNameUnique(User user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         User info = userMapper.checkLoginNameUnique(user.getLoginName());
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
-            return UserConstants.USER_NAME_NOT_UNIQUE;
+            return UserConstants.NOT_UNIQUE;
         }
-        return UserConstants.USER_NAME_UNIQUE;
+        return UserConstants.UNIQUE;
     }
 
     /**
@@ -382,15 +382,15 @@ public class UserServiceImpl implements IUserService
      * @return
      */
     @Override
-    public String checkPhoneUnique(User user)
+    public boolean checkPhoneUnique(User user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         User info = userMapper.checkPhoneUnique(user.getPhonenumber());
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
-            return UserConstants.USER_PHONE_NOT_UNIQUE;
+            return UserConstants.NOT_UNIQUE;
         }
-        return UserConstants.USER_PHONE_UNIQUE;
+        return UserConstants.UNIQUE;
     }
 
     /**
@@ -400,15 +400,15 @@ public class UserServiceImpl implements IUserService
      * @return
      */
     @Override
-    public String checkEmailUnique(User user)
+    public boolean checkEmailUnique(User user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
         User info = userMapper.checkEmailUnique(user.getEmail());
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
-            return UserConstants.USER_EMAIL_NOT_UNIQUE;
+            return UserConstants.NOT_UNIQUE;
         }
-        return UserConstants.USER_EMAIL_UNIQUE;
+        return UserConstants.UNIQUE;
     }
 
     /**
@@ -510,15 +510,18 @@ public class UserServiceImpl implements IUserService
                     BeanValidators.validateWithException(validator, user);
                     user.setPassword(password);
                     user.setCreateBy(operName);
-                    this.insertUser(user);
+                    userMapper.insertUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 导入成功");
                 }
                 else if (isUpdateSupport)
                 {
                     BeanValidators.validateWithException(validator, user);
+                    checkUserAllowed(u);
+                    checkUserDataScope(u.getUserId());
+                    user.setUserId(u.getUserId());
                     user.setUpdateBy(operName);
-                    this.updateUser(user);
+                    userMapper.updateUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 更新成功");
                 }
